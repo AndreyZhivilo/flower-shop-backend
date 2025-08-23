@@ -19,15 +19,13 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install Supabase CLI via Homebrew
+    - name: Download and install Supabase CLI
       run: |
-        # Устанавливаем Homebrew если нет
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        
-        # Устанавливаем Supabase CLI
-        brew install supabase/tap/supabase
+        # Скачиваем последнюю версию Supabase CLI
+        LATEST_RELEASE=$(curl -s https://api.github.com/repos/supabase/cli/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        wget "https://github.com/supabase/cli/releases/download/${LATEST_RELEASE}/supabase_${LATEST_RELEASE:1}_linux_amd64.tar.gz"
+        tar -xzf supabase_${LATEST_RELEASE:1}_linux_amd64.tar.gz
+        sudo mv supabase /usr/local/bin/
         supabase --version
 
     - name: Apply migrations
