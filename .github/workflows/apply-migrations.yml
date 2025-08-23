@@ -20,13 +20,11 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Download and install Supabase CLI
+    - name: Install Supabase CLI
       run: |
-        # Скачиваем последнюю версию Supabase CLI
-        LATEST_RELEASE=$(curl -s https://api.github.com/repos/supabase/cli/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-        wget "https://github.com/supabase/cli/releases/download/${LATEST_RELEASE}/supabase_${LATEST_RELEASE:1}_linux_amd64.tar.gz"
-        tar -xzf supabase_${LATEST_RELEASE:1}_linux_amd64.tar.gz
-        sudo mv supabase /usr/local/bin/
+        # Устанавливаем Supabase CLI (официальный метод)
+        curl -fsSL https://github.com/supabase/cli/raw/main/install.sh | bash
+        sudo mv /home/runner/.supabase/bin/supabase /usr/local/bin/
         supabase --version
 
     - name: Apply migrations
