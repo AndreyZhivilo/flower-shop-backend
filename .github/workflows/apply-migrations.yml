@@ -20,11 +20,15 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install Supabase CLI
+    - name: Install Supabase CLI via Homebrew
       run: |
-        # Устанавливаем Supabase CLI (официальный метод)
-        curl -fsSL https://github.com/supabase/cli/raw/main/install.sh | bash
-        sudo mv /home/runner/.supabase/bin/supabase /usr/local/bin/
+        # Устанавливаем Homebrew если нет
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        
+        # Устанавливаем Supabase CLI
+        brew install supabase/tap/supabase
         supabase --version
 
     - name: Apply migrations
