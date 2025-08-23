@@ -31,13 +31,25 @@ jobs:
         brew install supabase/tap/supabase
         supabase --version
 
-    - name: Apply migrations
+    - name: Apply migrations with supabase db push
       env:
-        SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-        SUPABASE_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_URL: ${{ secrets.DB_URL }}
       run: |
-        # Получаем информацию о проекте
-        SUPABASE_PROJECT_ID=$(supabase projects list --json | jq -r '.[0].id')
+        # Вариант 1: Простое применение миграций
+        supabase db push --db-url="$DB_URL" --debug
         
-        # Применяем миграции
-        supabase db push --project-ref $SUPABASE_PROJECT_ID --password $SUPABASE_DB_PASSWORD
+        # Вариант 2: С предварительным dry-run (рекомендуется)
+        # echo "=== DRY RUN ==="
+        # supabase db push --db-url="$DB_URL" --dry-run
+        
+        # echo "=== APPLYING MIGRATIONS ==="
+        # supabase db push --db-url="$DB_URL"
+        
+        # echo "=== MIGRATION COMPLETE ==="
+
+    - name: Verify migrations
+      env:
+        DB_URL: ${{ secrets.DB_URL }}
+      run: |
+        # Проверяем историю миграций
+        supabase migration list --db-url="$DB_URL"
