@@ -38,7 +38,7 @@ jobs:
         # Вариант 1: Простое применение миграций
         npx supabase db push --db-url="$DB_URL" --debug
         
-        # Вариант 2: С предварительным dry-run (рекомендуется)
+        ## Вариант 2: С предварительным dry-run (рекомендуется)
         # echo "=== DRY RUN ==="
         # supabase db push --db-url="$DB_URL" --dry-run
         
