@@ -36,7 +36,7 @@ jobs:
         DB_URL: ${{ secrets.DB_URL }}
       run: |
         # Вариант 1: Простое применение миграций
-        supabase db push --db-url="$DB_URL" --debug
+        npx supabase db push --db-url="$DB_URL" --debug
         
         # Вариант 2: С предварительным dry-run (рекомендуется)
         # echo "=== DRY RUN ==="
