@@ -27,7 +27,7 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          cd /flower-shop-backend
+          cd flower-shop-backend
           git pull origin main
 
     - name: Install Supabase CLI via Homebrew
