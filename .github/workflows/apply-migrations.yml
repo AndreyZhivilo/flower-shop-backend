@@ -32,7 +32,7 @@ jobs:
 
     - name: Install Supabase CLI via Homebrew
       run: |
-        # Устанавливаем Homebrew если нет
+        ## Устанавливаем Homebrew если нет
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bash_profile
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
